@@ -11,10 +11,18 @@ public class ClientInstance : NetworkBehaviour
 
     [HideInInspector] public Transform spawnPoint;
 
-    public GameObject player;
+    public GameObject playerPrefab;
+
+    GameObject player;
 
     private bool _initalized = false;
 
+    private bool isRespawning = false;
+
+
+    //TEMP
+    bool initRespawn = false;
+    //TEMP
     private void Start()
     {
         if(hasAuthority) { networkManager = (FrameworkNetworkManager)FrameworkNetworkManager.singleton; }
@@ -28,6 +36,28 @@ public class ClientInstance : NetworkBehaviour
             spawnPoint = transform;
         }
 
+        TryRespawn();
+    }
+
+    private void Update()
+    {
+        if(hasAuthority)
+        {
+            if(player == null && !isRespawning && initRespawn)
+            {
+                StartCoroutine(respawnAfterTime(5f));
+                isRespawning = true;
+            }
+            if(Input.GetKeyDown(KeyCode.H))
+            {
+                CmdRespawnAllPlayers(true);
+            }
+        }
+    }
+
+    private IEnumerator respawnAfterTime(float time)
+    {
+        yield return new WaitForSeconds(time);
         TryRespawn();
     }
 
@@ -53,9 +83,37 @@ public class ClientInstance : NetworkBehaviour
     [Command]
     public void CmdSpawnPlayer()
     {
-        GameObject _player = Instantiate(player, spawnPoint.position, spawnPoint.rotation);
+        GameObject _player = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
         NetworkServer.Spawn(_player, base.connectionToClient);
+        TargetSetPlayerVar(base.connectionToClient, _player);
     }
+    [TargetRpc]
+    public void TargetSetPlayerVar(NetworkConnection target, GameObject _player)
+    {
+        player = _player;
+        isRespawning = false;
+        initRespawn = true;
+        print("test");
+    }
+    [Command]
+    public void CmdRespawnAllPlayers(bool respawnExisting)
+    {
+        RpcRespawnAllPlayers(respawnExisting);
+    }
+    [ClientRpc]
+    public void RpcRespawnAllPlayers(bool respawnExisting)
+    {
+        if(hasAuthority)
+        {
+            if (respawnExisting || player == null)
+            {
+                isRespawning = true;
+                if (player != null) NetworkServer.Destroy(player);
+                TryRespawn();
+            }
+        }
+    }
+
 
     public static ClientInstance ReturnClientInstance(NetworkConnection conn)
     {

@@ -64,4 +64,5 @@ MonoBehaviour:
   syncInterval: 0.1
   networkManager: {fileID: 0}
   spawnPoint: {fileID: 0}
-  player: {fileID: 5684156592454172970, guid: 936ee9236823450428a66f8a138b8a4d, type: 3}
+  playerPrefab: {fileID: 5684156592454172970, guid: 936ee9236823450428a66f8a138b8a4d,
+    type: 3}

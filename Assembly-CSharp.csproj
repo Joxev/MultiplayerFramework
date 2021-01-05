@@ -55,6 +55,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Core\Scripts\ClientInstance.cs" />
+     <Compile Include="Assets\Core\Scripts\FrameworkNetworkManager.cs" />
+     <Compile Include="Assets\Core\Scripts\Player\AuthorityChecker.cs" />
+     <Compile Include="Assets\Core\Scripts\Player\Demo\ClickDestroy.cs" />
+     <Compile Include="Assets\Core\Scripts\Player\Demo\ObjectClick.cs" />
+     <Compile Include="Assets\Core\Scripts\Player\Demo\PlayerLook.cs" />
+     <Compile Include="Assets\Core\Scripts\Player\Demo\PlayerMove.cs" />
+     <Compile Include="Assets\Core\Scripts\Player\Player.cs" />
      <Compile Include="Assets\FirstGearGames\Assets\FlexNetworkTransform\Scripts\FlexNetworkTransform.cs" />
      <Compile Include="Assets\FirstGearGames\Assets\FlexNetworkTransform\Scripts\FlexNetworkTransformBase.cs" />
      <Compile Include="Assets\FirstGearGames\Assets\FlexNetworkTransform\Scripts\FlexNetworkTransformChild.cs" />
@@ -72,13 +80,6 @@
      <Compile Include="Assets\FirstGearGames\Scripts\Utilities\Quaternions.cs" />
      <Compile Include="Assets\FirstGearGames\Scripts\Utilities\Transforms.cs" />
      <Compile Include="Assets\FirstGearGames\Scripts\Utilities\Vectors.cs" />
-     <Compile Include="Assets\Scripts\ClientInstance.cs" />
-     <Compile Include="Assets\Scripts\FrameworkNetworkManager.cs" />
-     <Compile Include="Assets\Scripts\Player\AuthorityChecker.cs" />
-     <Compile Include="Assets\Scripts\Player\Lerper.cs" />
-     <Compile Include="Assets\Scripts\Player\Player.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerLook.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerMove.cs" />
      <None Include="Assets\FirstGearGames\Assets\FlexNetworkTransform\README.txt" />
      <None Include="Assets\Project.txt" />
      <None Include="Assets\Mirror\Version.txt" />
