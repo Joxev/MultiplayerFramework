@@ -303,7 +303,7 @@
       <HintPath>Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>C:/Users/troll/Desktop/Max/Unity/MultiplayerFramework/Library/PackageCache/com.unity.ext.nunit@1.0.5/net35/unity-custom/nunit.framework.dll</HintPath>
+      <HintPath>C:/Users/troll/Desktop/Max/Github/GitMultiplayerFramework/MultiplayerFramework/Library/PackageCache/com.unity.ext.nunit@1.0.5/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2019.4.16f1\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>
@@ -656,6 +656,12 @@
     <Compile Include="Assets\FirstGearGames\Assets\FlexNetworkTransform\Scripts\FlexNetworkTransformBase.cs" />
     <Compile Include="Assets\FirstGearGames\Assets\FlexNetworkTransform\Scripts\FlexNetworkTransformChild.cs" />
     <Compile Include="Assets\FirstGearGames\Assets\FlexNetworkTransform\Scripts\Supporting.cs" />
+    <Compile Include="Assets\FirstGearGames\Milestone_UDP\Scripts\FixedUpdateManager.cs" />
+    <Compile Include="Assets\FirstGearGames\Milestone_UDP\Scripts\Motor.cs" />
+    <Compile Include="Assets\FirstGearGames\Milestone_UDP\Scripts\SmoothToZero.cs" />
+    <Compile Include="Assets\FirstGearGames\Milestone_UDP\Scripts\States\ActionCodes.cs" />
+    <Compile Include="Assets\FirstGearGames\Milestone_UDP\Scripts\States\ClientMotorState.cs" />
+    <Compile Include="Assets\FirstGearGames\Milestone_UDP\Scripts\States\ServerMotorState.cs" />
     <Compile Include="Assets\FirstGearGames\Scripts\EditorRuntime\BitMaskAttribute.cs" />
     <Compile Include="Assets\FirstGearGames\Scripts\Utilities\Maths\Floats.cs" />
     <Compile Include="Assets\FirstGearGames\Scripts\Utilities\Maths\Ints.cs" />
@@ -666,7 +672,10 @@
     <Compile Include="Assets\Scripts\ClientInstance.cs" />
     <Compile Include="Assets\Scripts\FrameworkNetworkManager.cs" />
     <Compile Include="Assets\Scripts\Player\AuthorityChecker.cs" />
+    <Compile Include="Assets\Scripts\Player\Lerper.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerLook.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerMove.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\FirstGearGames\Assets\ChangeLog.txt" />
@@ -679,6 +688,7 @@
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />
     <None Include="Assets\Mirror\Readme.txt" />
     <None Include="Assets\Mirror\Version.txt" />
+    <None Include="Assets\Project.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
