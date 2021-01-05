@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 2466718611378495898}
   - component: {fileID: 3203388777409695502}
   - component: {fileID: 6181176221420291522}
+  - component: {fileID: 3591052724961185898}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -333,6 +334,25 @@ MonoBehaviour:
   syncAngularVelocity: 1
   clearAngularVelocity: 0
   angularVelocitySensitivity: 0.1
+--- !u!114 &3591052724961185898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5684156592454172970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b42fa79f45ddae4e83ef66a302f04a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  prefabSpawn: {fileID: 6745890618451742167, guid: ba7b0506e7951c449b7a0a1dfa3c737e,
+    type: 3}
+  hittable:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &7426943118679361429
 GameObject:
   m_ObjectHideFlags: 0
