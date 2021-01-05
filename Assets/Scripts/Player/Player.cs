@@ -54,7 +54,7 @@ public class Player : NetworkBehaviour
         if (!hasAuthority)
         {
             // make non-local players run this
-            playerInfoCanvas.transform.LookAt(Camera.main.transform);
+            if(playerInfoCanvas != null) playerInfoCanvas.transform.LookAt(Camera.main.transform);
             return;
         }
     }
