@@ -18,16 +18,16 @@ public class ClickDestroy : NetworkBehaviour
                 {
                     if(hit.collider.tag == "Player")
                     {
-                        CmdDestroyPlayer(hit.collider.gameObject);
+                        CmdCallDeath(hit.collider.gameObject);
                     }
                 }
             }
         }
     }
-
     [Command]
-    public void CmdDestroyPlayer(GameObject hit)
+    public void CmdCallDeath(GameObject go)
     {
-        NetworkServer.Destroy(hit);
+        NetworkIdentity otherIdentity = go.GetComponent<NetworkIdentity>();
+        go.GetComponent<Player>().TargetPlayerDeath(otherIdentity.connectionToClient);
     }
 }

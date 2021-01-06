@@ -655,6 +655,7 @@
     <Compile Include="Assets\Core\Scripts\ClientInstance.cs" />
     <Compile Include="Assets\Core\Scripts\FrameworkNetworkManager.cs" />
     <Compile Include="Assets\Core\Scripts\Player\AuthorityChecker.cs" />
+    <Compile Include="Assets\Core\Scripts\Player\Demo\ClickDestroy.cs" />
     <Compile Include="Assets\Core\Scripts\Player\Demo\ObjectClick.cs" />
     <Compile Include="Assets\Core\Scripts\Player\Demo\PlayerLook.cs" />
     <Compile Include="Assets\Core\Scripts\Player\Demo\PlayerMove.cs" />

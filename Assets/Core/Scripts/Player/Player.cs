@@ -40,6 +40,21 @@ public class Player : NetworkBehaviour
         GetComponent<Renderer>().material = playerMaterialClone;
     }
 
+    [TargetRpc]
+    public void TargetPlayerDeath(NetworkConnection target)
+    {
+        if(hasAuthority)
+        {
+            ClientInstance.Instance.respawnAfterTime();
+            CmdPlayerDeath(this.gameObject);
+        }
+    }
+    [Command]
+    public void CmdPlayerDeath(GameObject _go)
+    {
+        NetworkServer.Destroy(_go);
+    }
+
     [Command]
     public void CmdSetupPlayer(string _name, Color _col)
     {

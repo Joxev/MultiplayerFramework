@@ -19,10 +19,7 @@ public class ClientInstance : NetworkBehaviour
 
     private bool isRespawning = false;
 
-
-    //TEMP
-    bool initRespawn = false;
-    //TEMP
+    public Coroutine respawnTime;
     private void Start()
     {
         if(hasAuthority) { networkManager = (FrameworkNetworkManager)FrameworkNetworkManager.singleton; }
@@ -43,11 +40,6 @@ public class ClientInstance : NetworkBehaviour
     {
         if(hasAuthority)
         {
-            if(player == null && !isRespawning && initRespawn)
-            {
-                StartCoroutine(respawnAfterTime(5f));
-                isRespawning = true;
-            }
             if(Input.GetKeyDown(KeyCode.H))
             {
                 CmdRespawnAllPlayers(true);
@@ -55,9 +47,16 @@ public class ClientInstance : NetworkBehaviour
         }
     }
 
-    private IEnumerator respawnAfterTime(float time)
+    public void respawnAfterTime()
     {
+        respawnTime = StartCoroutine(iRespawnAfterTime(5f));
+    }
+
+    private IEnumerator iRespawnAfterTime(float time)
+    {
+        isRespawning = true;
         yield return new WaitForSeconds(time);
+        isRespawning = false;
         TryRespawn();
     }
 
@@ -75,6 +74,9 @@ public class ClientInstance : NetworkBehaviour
     {
         if (!_initalized) { return; }
     }
+
+    #region Rpc/Commands
+
     [Client]
     public void TryRespawn()
     {
@@ -87,33 +89,41 @@ public class ClientInstance : NetworkBehaviour
         NetworkServer.Spawn(_player, base.connectionToClient);
         TargetSetPlayerVar(base.connectionToClient, _player);
     }
+
     [TargetRpc]
     public void TargetSetPlayerVar(NetworkConnection target, GameObject _player)
     {
-        player = _player;
-        isRespawning = false;
-        initRespawn = true;
-        print("test");
+        if(hasAuthority)
+        {
+            player = _player;
+        }
     }
+
     [Command]
     public void CmdRespawnAllPlayers(bool respawnExisting)
     {
-        RpcRespawnAllPlayers(respawnExisting);
+        foreach(ClientInstance c in FrameworkNetworkManager.ClientInstances)
+        {
+            c.RpcRespawnAllPlayers(respawnExisting);
+        }
     }
     [ClientRpc]
     public void RpcRespawnAllPlayers(bool respawnExisting)
     {
-        if(hasAuthority)
+        if (respawnExisting || player == null)
         {
-            if (respawnExisting || player == null)
-            {
-                isRespawning = true;
-                if (player != null) NetworkServer.Destroy(player);
-                TryRespawn();
-            }
+            if (respawnTime != null) { StopCoroutine(respawnTime);  }
+
+            CmdDestroyMe(player);
+            TryRespawn();
         }
     }
-
+    [Command]
+    public void CmdDestroyMe(GameObject _go)
+    {
+        if (_go != null) NetworkServer.Destroy(_go);
+    }
+    #endregion
 
     public static ClientInstance ReturnClientInstance(NetworkConnection conn)
     {
