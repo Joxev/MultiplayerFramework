@@ -14,16 +14,17 @@ namespace FirstGearGames.Mirrors.Assets.FlexNetworkTransforms.Editors
         private SerializedProperty _synchronizeInterval;
 
         private SerializedProperty _reliable;
-        private SerializedProperty _preciseSynchronization;
-        
+        private SerializedProperty _resendUnreliable;
+
         private SerializedProperty _interpolationFallbehind;
         private SerializedProperty _extrapolationSpan;
-        
+
         private SerializedProperty _teleportThreshold;
 
         private SerializedProperty _clientAuthoritative;
         private SerializedProperty _synchronizeToOwner;
 
+        private SerializedProperty _compressSmall;
 
         private SerializedProperty _synchronizePosition;
         private SerializedProperty _snapPosition;
@@ -39,10 +40,11 @@ namespace FirstGearGames.Mirrors.Assets.FlexNetworkTransforms.Editors
             _useLocalSpace = serializedObject.FindProperty("_useLocalSpace");
 
             _intervalType = serializedObject.FindProperty("_intervalType");
+
             _synchronizeInterval = serializedObject.FindProperty("_synchronizeInterval");
 
             _reliable = serializedObject.FindProperty("_reliable");
-            _preciseSynchronization = serializedObject.FindProperty("_preciseSynchronization");
+            _resendUnreliable = serializedObject.FindProperty("_resendUnreliable");
 
             _interpolationFallbehind = serializedObject.FindProperty("_interpolationFallbehind");
             _extrapolationSpan = serializedObject.FindProperty("_extrapolationSpan");
@@ -52,12 +54,12 @@ namespace FirstGearGames.Mirrors.Assets.FlexNetworkTransforms.Editors
             _clientAuthoritative = serializedObject.FindProperty("_clientAuthoritative");
             _synchronizeToOwner = serializedObject.FindProperty("_synchronizeToOwner");
 
+            _compressSmall = serializedObject.FindProperty("_compressSmall");
+
             _synchronizePosition = serializedObject.FindProperty("_synchronizePosition");
             _snapPosition = serializedObject.FindProperty("_snapPosition");
-
             _synchronizeRotation = serializedObject.FindProperty("_synchronizeRotation");
             _snapRotation = serializedObject.FindProperty("_snapRotation");
-
             _synchronizeScale = serializedObject.FindProperty("_synchronizeScale");
             _snapScale = serializedObject.FindProperty("_snapScale");
         }
@@ -72,7 +74,6 @@ namespace FirstGearGames.Mirrors.Assets.FlexNetworkTransforms.Editors
             EditorGUI.BeginChangeCheck();
             //EditorGUILayout.HelpBox("Experimental Release", MessageType.Warning);
             EditorGUILayout.HelpBox("Recommended defaults: Interpolation Fallbehind 0.04, Extrapolation Span between 0 and 0.1. If Reliable, Timing of 0.05 - 0.1. If Unreliable, Timing of FixedUpdate.", MessageType.Info);
-
 
             //Space.
             EditorGUILayout.LabelField("Space", EditorStyles.boldLabel);
@@ -108,7 +109,12 @@ namespace FirstGearGames.Mirrors.Assets.FlexNetworkTransforms.Editors
             EditorGUI.indentLevel++;
 
             EditorGUILayout.PropertyField(_reliable, new GUIContent("Reliable", "True to synchronize using the reliable channel. False to synchronize using the unreliable channel. Your project must use 0 as reliable, and 1 as unreliable for this to function properly. This feature is not supported on TCP transports."));
-            EditorGUILayout.PropertyField(_preciseSynchronization, new GUIContent("Precise Synchronization", "True to synchronize data anytime it has changed. False to allow greater differences before synchronizing."));
+            if (_reliable.boolValue == false)
+            {
+                EditorGUI.indentLevel++;
+                EditorGUILayout.PropertyField(_resendUnreliable, new GUIContent("Resend Unreliable", "True to synchronize using the reliable channel. False to synchronize using the unreliable channel. Your project must use 0 as reliable, and 1 as unreliable for this to function properly. This feature is not supported on TCP transports."));
+                EditorGUI.indentLevel--;
+            }
 
             EditorGUILayout.PropertyField(_interpolationFallbehind, new GUIContent("Interpolation Fallbehind", "How far in the past objects should be for interpolation. Higher values will result in smoother movement with network fluctuations but lower values will result in objects being closer to their actual position. Lower values can generally be used for longer synchronization intervalls."));
             EditorGUILayout.PropertyField(_extrapolationSpan, new GUIContent("Extrapolation Span", "How long to extrapolate when data is expected but does not arrive. Smaller values are best for fast synchronization intervals. For precision or fast reaction games you may want to use no extrapolation or only one or two synchronization intervals worth. Extrapolation is client-side only."));
@@ -135,6 +141,8 @@ namespace FirstGearGames.Mirrors.Assets.FlexNetworkTransforms.Editors
             //Synchronize Properties.
             EditorGUILayout.LabelField("Synchronized Properties", EditorStyles.boldLabel);
             EditorGUI.indentLevel++;
+
+            EditorGUILayout.PropertyField(_compressSmall, new GUIContent("Compress Small Values", "True to compress small values on position and scale. Values will be rounded to the hundredth decimal place, eg: 102.12f."));
 
             EditorGUILayout.PropertyField(_synchronizePosition, new GUIContent("Position", "Synchronize options for position."));
             if (_synchronizePosition.intValue == 0)

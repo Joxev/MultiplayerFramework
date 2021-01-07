@@ -66,3 +66,6 @@ MonoBehaviour:
   spawnPoint: {fileID: 0}
   playerPrefab: {fileID: 5684156592454172970, guid: 936ee9236823450428a66f8a138b8a4d,
     type: 3}
+  spectateCameraPrefab: {fileID: 5368575892925344981, guid: 8f88d53a8dcb1b34686d7985abb8409a,
+    type: 3}
+  isDead: 0

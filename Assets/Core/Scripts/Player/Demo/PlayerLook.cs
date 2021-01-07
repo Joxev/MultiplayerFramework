@@ -16,7 +16,7 @@ public class PlayerLook : MonoBehaviour
         if (player == null) player = transform.parent;
     }
 
-    void Update()
+    void LateUpdate()
     {
         //input
         x += -Input.GetAxis("Mouse Y") * sensitivity;

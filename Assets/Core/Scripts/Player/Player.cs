@@ -40,11 +40,14 @@ public class Player : NetworkBehaviour
         GetComponent<Renderer>().material = playerMaterialClone;
     }
 
+    #region Networked
+
     [TargetRpc]
     public void TargetPlayerDeath(NetworkConnection target)
     {
         if(hasAuthority)
         {
+            ClientInstance.Instance.playerDeath(true);
             ClientInstance.Instance.respawnAfterTime();
             CmdPlayerDeath(this.gameObject);
         }
@@ -62,6 +65,7 @@ public class Player : NetworkBehaviour
         playerName = _name;
         playerColor = _col;
     }
+    #endregion
 
 
     void Update()
@@ -71,6 +75,13 @@ public class Player : NetworkBehaviour
             // make non-local players run this
             if(playerInfoCanvas != null) playerInfoCanvas.transform.LookAt(Camera.main.transform);
             return;
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                TargetPlayerDeath(connectionToClient);
+            }
         }
     }
 }

@@ -1,3 +1,59 @@
+2021/01/02
+	- FlexNetworkTransform
+		+ Set maximum MTU to 1200 for manager.
+		+ No longer experimental!
+		+ Renamed 'stable' package to 'old'.
+
+	- FlexNetworkAnimator
+		+ Fixed a typo on a file name.
+		+ Set maximum MTU to 1200 for manager.
+
+2020/12/31
+	- FlexNetworkTransform
+		- Backported 'precise synchronization' fixes to stable.
+
+	- FlexNetworkAnimator
+		- Built from the ground up! Previously FlexNetworkAnimator was using code from NetworkAnimator; that is no more! FlexNetworkAnimator now only uses 11-13% the bandwidth of NetworkAnimator and has a scaling 200% FPS gain over NetworkAnimator.
+
+2020/12/24
+	- FlexNetworkTransform
+		+ Fixed transforms not synchronizing when having more than one FlexNetworkTransform on an object, whether it be a child FlexNetworkTransform, or FlexNetworkTransform on a child object.
+		+ Reduced chances of extrapolation overshooting when using client authoritative movement on poor connections.
+		+ Added back in sequence checking for unreliable packets when sending from client to server. This was intentionally removed with intentions to be added back in after testing recent changes.
+		+ Fixed possibility of some packets being ignored when they shouldn't be when synchronizing hundreds of objects.
+		+ Clients now use recent optimizations when sending to server; in the previous update only server was using the optimizations.
+		+ Fixed extrapolation regularly overshooting and not properly expiring.
+
+2020/12/18
+	- FlexNetworkTransform
+		+ Made Compress Small Values enabled by default.
+		+ Massive performance improvements. FlexNetworkTransform does substantially better with bandwidth and frame rate compared to competitors.
+
+	- FlexNetworkAnimator
+		+ Fixed breaks caused by Mirror upgrade.
+
+2020/12/17
+	- FlexNetworkTransform
+		+ Removed precise synchronization option, it's now always on.
+		+ Reduced bandwidth usage by 10%; more drastic reductions under investigation.
+		+ Improved performance by 15%.
+		+ Added Compress Small Values option. When enabled will compress small values to the 100th decimal place; this saves additional bandwidth at the cost of precision.
+
+	- ReactivePhysicsObject
+		+ Removed precise synchronization option, it's now always on.
+
+2020/12/05
+	- FlexNetworkTransform
+		+ Fixed data sending excessively due to failed transform changes.
+		+ Unreliable sends can now optionally resend data. True to resend transform data with every unreliable packet. At the cost of bandwidth this will ensure smoother movement on very unstable connections but generally is not needed.
+		+ Added Favor Performance option while using timed intervals. While true FlexNetworkTransform will favor performance over update frequency. This is ideal when transform updates can be delayed very slightly.
+		+ More bandwidth saved by limiting who can receive remote actions.
+
+2020/12/01
+	- FlexNetworkTransform
+		+ Platform support improved; transforms previously struggled to stay synchronized with rotating platforms, or very long platforms. Transforms now stay in perfect synchronization under all conditions.
+		+ More rotation compression; reduced rotation sends by 2 bytes.
+
 2020/11/18
 	- FlexNetworkTransform
 		+ Added the ability to synchronize to networked platforms using FlexNetworkTransform.SetPlatform(platformNetworkIdentity). View FlexNetworkTransform README for more information.

@@ -13,11 +13,17 @@ public class ClientInstance : NetworkBehaviour
 
     public GameObject playerPrefab;
 
+    public GameObject spectateCameraPrefab;
+
     GameObject player;
+
+    GameObject spectateCamera;
 
     private bool _initalized = false;
 
     private bool isRespawning = false;
+
+    [HideInInspector] public bool isDead;
 
     public Coroutine respawnTime;
     private void Start()
@@ -47,9 +53,19 @@ public class ClientInstance : NetworkBehaviour
         }
     }
 
+    public void playerDeath(bool createSpectateCamera)
+    {
+        isDead = true;
+        if(createSpectateCamera)
+        {
+            spectateCamera = Instantiate(spectateCameraPrefab);
+        }
+    }
+
     public void respawnAfterTime()
     {
         respawnTime = StartCoroutine(iRespawnAfterTime(5f));
+        isDead = true;
     }
 
     private IEnumerator iRespawnAfterTime(float time)
@@ -96,6 +112,8 @@ public class ClientInstance : NetworkBehaviour
         if(hasAuthority)
         {
             player = _player;
+            isDead = false;
+            if(spectateCamera != null) { Destroy(spectateCamera); }
         }
     }
 
@@ -110,7 +128,7 @@ public class ClientInstance : NetworkBehaviour
     [ClientRpc]
     public void RpcRespawnAllPlayers(bool respawnExisting)
     {
-        if (respawnExisting || player == null)
+        if (respawnExisting || isDead)
         {
             if (respawnTime != null) { StopCoroutine(respawnTime);  }
 

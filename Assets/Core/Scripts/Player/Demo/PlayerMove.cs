@@ -18,7 +18,7 @@ public class PlayerMove : MonoBehaviour
         
     }
 
-    void Update()
+    void FixedUpdate()
     {
         //grounding
         isGrounded = Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y - 1, transform.position.z), 0.4f, Ground);

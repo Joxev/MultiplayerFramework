@@ -44,7 +44,10 @@ namespace FirstGearGames.Utilities.Maths
         /// <returns></returns>
         public static bool Near(this Vector3 a, Vector3 b, float tolerance = 0.01f)
         {
-            return (Vector3.Distance(a, b) <= tolerance);
+            if (tolerance == 0f)
+                return (a == b);
+            else
+                return FastSqrMagnitude(a - b) <= (tolerance * tolerance);
         }
 
         /// <summary>
